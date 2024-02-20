@@ -19,6 +19,7 @@ public class Main {
         this.isWinner = false;
     }
 
+
     public String getName() {
         return name;
     }
