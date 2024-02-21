@@ -15,101 +15,96 @@ public class Main {
     static Random random = new Random();
 
     // Constants
-    static final int NUMBER_OF_PLAYERS = 2;
-    static final int MAX_ROUNDS = 3;
-    static final int MAX_GAMES = 5;
-    static final int MAX_SCORE = 501;
-    static final int MAXIMUM_SCORE_POSSIBLE = 170;
-    static final int MINIMUM_SCORE = 0;
-    static final int FIRST_PLAYER_INDEX = 0;
-    static final int SECOND_PLAYER_INDEX = 1;
-    static final int FIRST_PLAYER = 0;
-    static final int SECOND_PLAYER = 1;
+    static final float ZEROPOINTZERO = 0.0f;
+    static final int NUMBEROFPLAYERS = 2;
+    static final int MAXIMUMROUNDS = 3;
+    static final int MAXIMUMGAMES = 5;
+    static final int MAXIMUMSCORE = 501;
+    static final int MAXIMUMSCOREPOSSIBLE = 170;
+    static final int MINIMUMSCORE = 0;
+    static final int FIRSTPLAYERINDEX = 0;
+    static final int SECONDPLAYERINDEX = 1;
+    static final int FIRSTPLAYER = 0;
+    static final int SECONDPLAYER = 1;
 
     // Variables
-    static String[] playerNames = new String[NUMBER_OF_PLAYERS];
-    static int[] playerScores = new int[NUMBER_OF_PLAYERS];
-    static int[] dartsThrown = new int[NUMBER_OF_PLAYERS];
-    static int gamesWonByPlayer1 = 0;
-    static int gamesWonByPlayer2 = 0;
-    static int totalDartsThrown = 0;
-    static int gamesPlayed = 0;
+    static String[] player_names = new String[NUMBEROFPLAYERS];
+    static int[] player_scores = new int[NUMBEROFPLAYERS];
+    static int[] darts_thrown = new int[NUMBEROFPLAYERS];
+    static int games_won_by_player1 = 0;
+    static int games_won_by_player2 = 0;
+    static int total_darts_thrown = 0;
+    static int games_played = 0;
 
     // Main method
     public static void main(String[] args) {
         System.out.println("Welcome to the Darts Game!");
 
         // Input player names
-        for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
-            System.out.print("Enter Player " + (i + 1) + "'s name: ");
-            playerNames[i] = scanner.nextLine();
+        for (int name = FIRSTPLAYER; name < NUMBEROFPLAYERS; name++) {
+            System.out.print("Enter Player " + (name + SECONDPLAYER) + "'s name: ");
+            player_names[name] = scanner.nextLine();
         }
 
-        // Play games
-        while (gamesPlayed < MAX_GAMES && (gamesWonByPlayer1 < MAX_ROUNDS && gamesWonByPlayer2 < MAX_ROUNDS)) {
+        while (games_played < MAXIMUMGAMES && (games_won_by_player1 < MAXIMUMROUNDS && games_won_by_player2 < MAXIMUMROUNDS)) {
             playGame();
         }
 
-        // Output final results
         System.out.println("Match Over!");
         System.out.println("Final Score:");
-        System.out.println(playerNames[FIRST_PLAYER_INDEX] + " won " + gamesWonByPlayer1 + " games.");
-        System.out.println(playerNames[SECOND_PLAYER_INDEX] + " won " + gamesWonByPlayer2 + " games.");
-        System.out.println(playerNames[FIRST_PLAYER_INDEX] + " 3-dart average score: " +
-                calculateAverageScore(gamesWonByPlayer1));
-        System.out.println(playerNames[SECOND_PLAYER_INDEX] + " 3-dart average score: " +
-                calculateAverageScore(gamesWonByPlayer2));
+        System.out.println(player_names[FIRSTPLAYERINDEX] + " won " + games_won_by_player1 + " games.");
+        System.out.println(player_names[SECONDPLAYERINDEX] + " won " + games_won_by_player2 + " games.");
+        System.out.println(player_names[FIRSTPLAYERINDEX] + " 3-dart average score: " +
+                calculateAverageScore(games_won_by_player1));
+        System.out.println(player_names[SECONDPLAYERINDEX] + " 3-dart average score: " +
+                calculateAverageScore(games_won_by_player2));
     }
 
     // Method to play a game
     public static void playGame() {
-        System.out.println("\nStarting Game " + (gamesPlayed + 1) + ".");
+        System.out.println("\nStarting Game " + (games_played + SECONDPLAYER) + ".");
 
-        // Determine starting player
-        int currentPlayerIndex = random.nextInt(NUMBER_OF_PLAYERS);
+        int currentPlayerIndex = random.nextInt(NUMBEROFPLAYERS);
 
-        // Initialize player scores
-        Arrays.fill(playerScores, MAX_SCORE);
+        Arrays.fill(player_scores, MAXIMUMSCORE);
 
-        // Game loop
         while (true) {
-            int opponentIndex = (currentPlayerIndex + 1) % NUMBER_OF_PLAYERS;
-            System.out.println("\nIt's " + playerNames[currentPlayerIndex] + "'s turn.");
-            System.out.println("Remaining score: " + playerScores[currentPlayerIndex]);
+            int opponentIndex = (currentPlayerIndex + SECONDPLAYER) % NUMBEROFPLAYERS;
+            System.out.println("\nIt's " + player_names[currentPlayerIndex] + "'s turn.");
+            System.out.println("Remaining score: " + player_scores[currentPlayerIndex]);
 
-            int roundScore = 0;
-            // Input scores for each dart
-            for (int dart = 0; dart < MAX_ROUNDS; dart++) {
-                System.out.print("Enter score for dart " + (dart + 1) + ": ");
+            int roundScore = FIRSTPLAYER;
+
+            for (int dart = FIRSTPLAYER; dart < MAXIMUMROUNDS; dart++) {
+                System.out.print("Enter score for dart " + (dart + SECONDPLAYER) + ": ");
                 int score = validateInput();
                 roundScore += score;
-                if (score == MAX_SCORE) {
-                    dartsThrown[currentPlayerIndex] = dart + 1;
+                if (score == MAXIMUMSCORE) {
+                    darts_thrown[currentPlayerIndex] = dart + SECONDPLAYER;
                     break;
                 }
             }
             scanner.nextLine();
 
-            // Update player score
-            if (playerScores[currentPlayerIndex] - roundScore >= MINIMUM_SCORE) {
-                playerScores[currentPlayerIndex] -= roundScore;
-                totalDartsThrown += dartsThrown[currentPlayerIndex];
+            if (player_scores[currentPlayerIndex] - roundScore >= MINIMUMSCORE) {
+                player_scores[currentPlayerIndex] -= roundScore;
+                total_darts_thrown += darts_thrown[currentPlayerIndex];
             } else {
                 System.out.println("The score you have entered has resulted in a negative score. " +
-                        "Your score has returned to " + playerScores[currentPlayerIndex]);
+                        "Your score has returned to " + player_scores[currentPlayerIndex]);
             }
 
-            // Check for win or bust
-            if (playerScores[currentPlayerIndex] == MINIMUM_SCORE) {
-                System.out.println(playerNames[currentPlayerIndex] + " wins the game in " +
-                        dartsThrown[currentPlayerIndex] + " darts!");
+            if (player_scores[currentPlayerIndex] == MINIMUMSCORE) {
+                System.out.println(player_names[currentPlayerIndex] + " wins the game in " +
+                        darts_thrown[currentPlayerIndex] + " darts!");
                 updateGameStatistics(currentPlayerIndex);
-                gamesPlayed++;
+                games_played++;
                 break;
-            } else if (playerScores[currentPlayerIndex] < MINIMUM_SCORE) {
-                System.out.println("Busted! " + playerNames[currentPlayerIndex] +
-                        " starts the next round with " + MAX_SCORE + " points.");
+            } else if (player_scores[currentPlayerIndex] < MINIMUMSCORE) {
+                System.out.println("Busted! " + player_names[currentPlayerIndex] +
+                        " starts the next round with " + MAXIMUMSCORE + " points.");
             }
+
             currentPlayerIndex = opponentIndex;
         }
     }
@@ -121,7 +116,7 @@ public class Main {
             scanner.next();
         }
         int input = scanner.nextInt();
-        while (input < MINIMUM_SCORE || input > MAXIMUM_SCORE_POSSIBLE) {
+        while (input < MINIMUMSCORE || input > MAXIMUMSCOREPOSSIBLE) {
             System.out.println("Invalid input. Please enter an integer between 0 and 170.");
             input = scanner.nextInt();
         }
@@ -130,15 +125,15 @@ public class Main {
 
     // Method to update game statistics
     public static void updateGameStatistics(int currentPlayerIndex) {
-        if (currentPlayerIndex == FIRST_PLAYER) {
-            gamesWonByPlayer1++;
+        if (currentPlayerIndex == FIRSTPLAYER) {
+            games_won_by_player1++;
         } else {
-            gamesWonByPlayer2++;
+            games_won_by_player2++;
         }
     }
 
     // Method to calculate average score
     public static double calculateAverageScore(int gamesWonByPlayer) {
-        return (gamesWonByPlayer > MINIMUM_SCORE) ? (double) totalDartsThrown / gamesWonByPlayer : 0.0;
+        return (gamesWonByPlayer > MINIMUMSCORE) ? (double) total_darts_thrown / gamesWonByPlayer : ZEROPOINTZERO;
     }
 }
