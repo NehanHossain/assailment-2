@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
 
+//Main
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static Random random = new Random();
@@ -36,6 +37,7 @@ public class Main {
     static int total_darts_thrown = 0;
     static int games_played = 0;
 
+
     // Main method
     public static void main(String[] args) {
         System.out.println("Welcome to the Darts Game!");
@@ -59,6 +61,7 @@ public class Main {
         System.out.println(player_names[SECONDPLAYERINDEX] + " 3-dart average score: " +
                 calculateAverageScore(games_won_by_player2));
     }
+
 
     // Method to play a game
     public static void playGame() {
@@ -109,6 +112,7 @@ public class Main {
         }
     }
 
+
     // Method to validate input score
     public static int validateInput() {
         while (!scanner.hasNextInt()) {
@@ -123,6 +127,7 @@ public class Main {
         return input;
     }
 
+
     // Method to update game statistics
     public static void updateGameStatistics(int currentPlayerIndex) {
         if (currentPlayerIndex == FIRSTPLAYER) {
@@ -131,6 +136,7 @@ public class Main {
             games_won_by_player2++;
         }
     }
+
 
     // Method to calculate average score
     public static double calculateAverageScore(int gamesWonByPlayer) {
